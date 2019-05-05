@@ -1,0 +1,159 @@
+<template>
+    <!-- for a textbox -->
+
+    <template if:true={recordfield.text}>
+        <div class='row'>
+            <template if:true={modeinfo.isEditMode}>
+                <template if:true={isValueEdited}>
+                    <lightning-input label={recordfield.label} id={recordfield.field} value={recordfield.displayValue}
+                        onchange={changeDetect} required={recordfield.required}></lightning-input><br>
+                </template>
+                <template if:false={isValueEdited}>
+                    <lightning-input label={recordfield.label} id={recordfield.field} onchange={changeDetect}>
+                    </lightning-input><br>
+                    <!-- <input key={recordfield.label} id={recordfield.field} type=textarea onchange={changeDetect} /><br key={recordfield.label}> -->
+                </template>
+            </template>
+
+            <template if:true={modeinfo.isCreateMode}>
+                <lightning-input label={recordfield.label} id={recordfield.field} onchange={changeDetect}
+                    required={recordfield.required}>
+                </lightning-input><br>
+            </template>
+
+            <template if:true={modeinfo.isViewMode}>
+                <label key={recordfield.label}>{recordfield.label}</label><br>
+                <span>{recordfield.displayValue}</span><br>
+            </template>
+        </div>
+    </template>
+
+    <!-- end for a textbox -->
+
+    <template if:true={recordfield.Picklist}>
+        <c-required-field-component isfieldrequired={recordfield.required}></c-required-field-component>
+        <label key={recordfield.label}>{recordfield.label}</label><br>
+        <template if:true={modeinfo.isEditMode}>
+            <select id={recordfield.field} onchange={changeDetect}>
+                <template if:true={isValueEdited}>
+                    <option value={recordfield.displayValue}>{recordfield.displayValue}</option>
+                </template>
+                <template if:false={isValueEdited}>
+                    <option value='none'>--None--</option>
+                </template>
+                <template for:each={recordfield.pickValues} for:item="pickVal" for:index="i">
+                    <option key={pickVal.label} value={pickVal.value}>{pickVal.label}</option>
+                </template>
+            </select><br>
+        </template>
+
+        <template if:true={modeinfo.isCreateMode}>
+            <select id={recordfield.field} onchange={changeDetect}>
+                <option value='none'>--None--</option>
+                <template for:each={recordfield.pickValues} for:item="pickVal" for:index="i">
+                    <option key={pickVal.label} value={pickVal.value}>{pickVal.label}</option>
+                </template>
+            </select>
+            <br>
+        </template>
+        <template if:true={modeinfo.isViewMode}>
+            <span>{recordfield.displayValue}</span>
+            <br>
+        </template>
+    </template>
+
+    <!-- for a Reference -->
+    <template if:true={recordfield.Reference}>
+        <c-required-field-component isfieldrequired={recordfield.required}></c-required-field-component>
+        <label key={recordfield.label}>{recordfield.label}</label><br>
+        <template if:true={modeinfo.isEditMode}>
+            <template if:true={recordfield.editableForUpdate}>
+                <select id={recordfield.field} onchange={changeDetect}>
+                    <template if:true={isValueEdited}>
+                        <option value={recordfield.displayValue}>{recordfield.linkText}</option>
+                    </template>
+                    <template if:false={isValueEdited}>
+                        <option value='none'>--None--</option>
+                    </template>
+                    <template for:each={recordfield.record} for:item="pickVal" for:index="i">
+                        <option key={pickVal.fields.Id.value} value={pickVal.fields.Id.value}>
+                            {pickVal.fields.Name.value}
+                        </option>
+                    </template>
+                </select>
+            </template>
+            <template if:false={recordfield.editableForUpdate}>
+                <span>{recordfield.displayValue}</span>
+            </template>
+            <br>
+        </template>
+
+        <template if:true={modeinfo.isCreateMode}>
+            <template if:true={recordfield.editableForNew}>
+                <select id={recordfield.field} onchange={changeDetect}>
+                    <option value='none'>--None--</option>
+                    <template for:each={recordfield.record} for:item="pickVal" for:index="i">
+                        <option key={pickVal.fields.Id.value} value={pickVal.fields.Id.value}>
+                            {pickVal.fields.Name.value}
+                        </option>
+                    </template>
+                </select>
+            </template>
+            <template if:false={recordfield.editableForNew}>
+                <span>{recordfield.displayValue}</span>
+            </template>
+            <br>
+        </template>
+
+        <template if:true={modeinfo.isViewMode}>
+            <span>{recordfield.displayValue}</span>
+            <br>
+        </template>
+
+        <!-- <label>{recordfield.label}</label><br>
+        <select id={recordfield.field} onchange={changeDetect}>
+            <option value='none'>--None--</option>
+            <template for:each={recordfield.record} for:item="pickVal" for:index="i">
+                <option key={pickVal.fields.Id.value} value={pickVal.fields.Id.value}>{pickVal.fields.Name.value}</option>
+            </template>
+        </select> -->
+
+        <!-- <lightning-input label={recordfield.label} type="search" id={recordfield.field} value={recordfield.displayValue}
+                        onchange={changeDetect} required={recordfield.required} onclick={getReferences}></lightning-input> -->
+    </template>
+
+
+    <!-- End for a Reference -->
+
+    <!-- for date -->
+    <template if:true={recordfield.isDate}>
+        <c-required-field-component isfieldrequired={recordfield.required}></c-required-field-component>
+        <template if:true={modeinfo.isEditMode}>
+            <label>{recordfield.label}</label><br>
+            <input id={recordfield.field} type='date' value={recordfield.value} onchange={changeDetect} />
+        </template>
+        <template if:true={modeinfo.isCreateMode}>
+            <label>{recordfield.label}</label><br>
+            <input id={recordfield.field} type='date' onchange={changeDetect} />
+        </template>
+        <template if:true={modeinfo.isViewMode}>
+            <label>{recordfield.label}</label><br>{recordfield.value}
+        </template>
+    </template>
+    <!-- for end date -->
+
+    <!-- for a checkbox -->
+    <template if:true={recordfield.Boolean}>
+        <c-required-field-component isfieldrequired={recordfield.required}></c-required-field-component>
+        <template if:true={recordfield.value}>
+            <label>{recordfield.label}</label><br>
+            <input id={recordfield.field} type=checkbox onchange={changeDetect} checked />
+        </template>
+        <template if:false={recordfield.value}>
+            <label>{recordfield.label}</label><br>
+            <input id={recordfield.field} type=checkbox onchange={changeDetect} />
+        </template>
+    </template>
+    <!-- end for a checkbox -->
+
+</template>

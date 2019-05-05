@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/fieldComponent": [
+                "fieldComponent/fieldComponent.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
+            ],
+            "c/recordRowComponent": [
+                "recordRowComponent/recordRowComponent.js"
+            ],
+            "c/requiredFieldComponent": [
+                "requiredFieldComponent/requiredFieldComponent.js"
+            ],
+            "c/sectionComponent": [
+                "sectionComponent/sectionComponent.js"
+            ],
+            "c/utils": [
+                "utils/utils.js"
+            ],
+            "c/viewer": [
+                "viewer/viewer.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

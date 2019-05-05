@@ -1,0 +1,28 @@
+<template>
+        <lightning-card >
+                <!-- ct-width is temp class -->
+                <label class="temp-lbl-mrg"><b>{mode} mode is Active for {apiname}</b></label>
+                <lightning-button label="View Details" class="temp-btn-mrg" onclick={initialize}></lightning-button>
+                <table class="slds-table">
+                        <template for:each={layout} for:item="ly_section">
+                                <c-section-component key={ly_section.heading} sectiontitle={ly_section}>
+                                </c-section-component>
+                                <template for:each={ly_section.rows} for:item="ly_row">
+                                        <tr key={ly_row.id}>
+                                                <template if:true={isViewerStared}>
+                                                        <c-record-row-component layoutrow={ly_row.items}
+                                                                modeinfo={modeInfo} apiname={apiname}>
+                                                        </c-record-row-component>
+                                                </template>
+                                        </tr>
+                                </template>
+                        </template>
+                </table>
+                <template if:true={modeInfo.isEditMode}>
+                        <lightning-button class="temp-btn-mrg" label="update" onclick={updateRecord}></lightning-button>
+                </template>
+                <template if:true={modeInfo.isCreateMode}>
+                        <lightning-button class="temp-btn-mrg" label="save" onclick={saveRecord}></lightning-button>
+                </template>
+        </lightning-card>
+</template>

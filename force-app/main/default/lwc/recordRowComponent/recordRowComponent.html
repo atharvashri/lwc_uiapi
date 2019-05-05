@@ -1,0 +1,11 @@
+<template>
+    <tr>
+        <template for:each={layoutrow} for:item="ly_item">
+            <td class="slds-cell-wrap"  key={ly_item.id}>
+                <template for:each={ly_item.values} for:item="ly_values">
+                    <c-field-component key={ly_values.label} recordfieldcmp={ly_values} modeinfo={modeinfo} apiname={apiname}></c-field-component>
+                </template>
+            </td>
+        </template>
+    </tr>
+</template>
